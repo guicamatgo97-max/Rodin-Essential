@@ -574,7 +574,9 @@ const Map<String, String> _exact = <String, String>{
   '1.5K · Canvas, density and refresh rate': '1.5K · Tela, densidade e taxa de atualização',
   'Power & Memory': 'Energia e memória',
   'Charging and memory management': 'Carregamento e gerenciamento de memória',
+  'Game Monitor': 'Monitor de jogos',
   'In-game FPS and device load': 'FPS no jogo e carga do dispositivo',
+  'Audio Hub': 'Central de áudio',
   'Bluetooth codecs and audio preferences': 'Codecs Bluetooth e preferências de áudio',
   'Sensors and hardware health': 'Sensores e integridade do hardware',
   'HARDWARE CONTROLS': 'CONTROLES DE HARDWARE',
@@ -1266,6 +1268,7 @@ const List<List<Object>> _patterns = <List<Object>>[
   <Object>['^Applied (.+?) \\((.+?) MB\\)\$', <int>[0, 1], '{0} aplicado ({1} MB)'],
   <Object>['^(.+?) · (.+?) Swappiness\$', <int>[0, 1], '{0} · Swappiness {1}'],
   <Object>['^Set Policy to (.+?)\$', <int>[0], 'Política definida para {0}'],
+  <Object>['^Charging · (.+?)\$', <int>[0], 'Carregando · {0}'],
   <Object>['^Monitoring · (.+?)\$', <int>[0], 'Monitorando · {0}'],
   <Object>['^Session · (.+?)m (.+?)s\$', <int>[0, 1], 'Sessão · {0}m {1}s'],
   <Object>['^Charging to (.+?)%\$', <int>[0], 'Carregando até {0}%'],
@@ -1298,4 +1301,5 @@ const List<List<Object>> _patterns = <List<Object>>[
   <Object>['^of (.+?) MB\$', <int>[0], 'de {0} MB'],
   <Object>['^Touch (.+?)\$', <int>[0], 'Toque {0}'],
   <Object>['^Best (.+?)\$', <int>[0], 'Recorde {0}'],
+  <Object>['^(.+?) · (.+?)\$', <int>[0, 1], '{0} · {1}'],
 ];
