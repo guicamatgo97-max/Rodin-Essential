@@ -6,7 +6,8 @@ import 'dart:ui' as ui;
 import 'dart:async';
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import 'ptbr.dart';
 import 'package:flutter/gestures.dart' show Drag, EagerGestureRecognizer;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/physics.dart';
@@ -1605,7 +1606,7 @@ class _ServiceSettingsCardState extends State<_ServiceSettingsCard> {
                           foregroundColor: accent,
                           backgroundColor: accent.withValues(alpha: 0.12),
                         ),
-                        tooltip: 'Reset all device settings',
+                        tooltip: ptTr('Reset all device settings'),
                         onPressed: connected && known && !busy
                             ? () => _change(reset: true)
                             : null,
@@ -5150,7 +5151,7 @@ class SupportScreen extends StatelessWidget {
                                 TextSpan(
                                   children: <InlineSpan>[
                                     TextSpan(
-                                      text: 'Codename · ',
+                                      text: ptTr('Codename · '),
                                       style: TextStyle(
                                         color: colors.onSurfaceVariant,
                                         fontWeight: FontWeight.w500,

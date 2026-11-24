@@ -257,7 +257,7 @@ class _RodinSecretRoomState extends State<RodinSecretRoom>
                             ),
                           ),
                           IconButton(
-                            tooltip: 'Close secret room',
+                            tooltip: ptTr('Close secret room'),
                             onPressed: () {
                               RodinHaptics.confirm();
                               _close();

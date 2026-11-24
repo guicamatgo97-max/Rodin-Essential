@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import 'ptbr.dart';
 
 import 'backend/rodin_backend.dart';
 
@@ -1233,8 +1234,8 @@ class _AudioHubScreenState extends State<AudioHubScreen>
             initialValue: unique.containsKey(_selectedCodec)
                 ? _selectedCodec
                 : null,
-            decoration: const InputDecoration(
-              labelText: 'Codec',
+            decoration: InputDecoration(
+              labelText: ptTr('Codec'),
               border: OutlineInputBorder(),
             ),
             items: capabilities.map((capability) {
@@ -1251,8 +1252,8 @@ class _AudioHubScreenState extends State<AudioHubScreen>
             initialValue: rates.contains(_selectedSampleRate)
                 ? _selectedSampleRate
                 : null,
-            decoration: const InputDecoration(
-              labelText: 'Sample rate',
+            decoration: InputDecoration(
+              labelText: ptTr('Sample rate'),
               border: OutlineInputBorder(),
             ),
             items: rates.map((rate) {
@@ -1278,8 +1279,8 @@ class _AudioHubScreenState extends State<AudioHubScreen>
             initialValue: depths.contains(_selectedBitDepth)
                 ? _selectedBitDepth
                 : null,
-            decoration: const InputDecoration(
-              labelText: 'Bit depth',
+            decoration: InputDecoration(
+              labelText: ptTr('Bit depth'),
               border: OutlineInputBorder(),
             ),
             items: depths.map((bits) {
@@ -1306,8 +1307,8 @@ class _AudioHubScreenState extends State<AudioHubScreen>
               initialValue: AudioLdacQuality.isKnown(_selectedLdacQuality)
                   ? _selectedLdacQuality
                   : null,
-              decoration: const InputDecoration(
-                labelText: 'LDAC quality',
+              decoration: InputDecoration(
+                labelText: ptTr('LDAC quality'),
                 border: OutlineInputBorder(),
               ),
               items: AudioLdacQuality.names.entries.map((entry) {
@@ -1520,7 +1521,7 @@ class _AudioHubScreenState extends State<AudioHubScreen>
         ),
         actions: <Widget>[
           IconButton(
-            tooltip: 'Refresh Bluetooth status',
+            tooltip: ptTr('Refresh Bluetooth status'),
             icon: const Icon(Icons.refresh_rounded),
             onPressed: _refresh,
           ),
@@ -1548,7 +1549,7 @@ class _AudioHubScreenState extends State<AudioHubScreen>
                 title: const Text('Bluetooth status'),
                 subtitle: Text(_statusLabel),
                 trailing: IconButton(
-                  tooltip: 'Refresh',
+                  tooltip: ptTr('Refresh'),
                   icon: const Icon(Icons.refresh_rounded),
                   onPressed: _refresh,
                 ),

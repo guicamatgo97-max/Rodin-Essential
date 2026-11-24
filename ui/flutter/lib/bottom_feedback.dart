@@ -1,7 +1,8 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import 'ptbr.dart';
 
 /// One geometry contract for the floating dock, scroll tails and feedback.
 abstract final class RodinBottomLayout {

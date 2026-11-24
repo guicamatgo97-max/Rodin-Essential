@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import 'ptbr.dart';
 
 /// Confirmation only: no device settings change until the user confirms.
 class RodinServiceConfirmation extends StatelessWidget {

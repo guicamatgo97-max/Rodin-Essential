@@ -465,8 +465,8 @@ class _SystemColorsPanelState extends State<SystemColorsPanel> {
                 textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
                   prefixText: '#',
-                  labelText: 'HEX color',
-                  hintText: '008577',
+                  labelText: ptTr('HEX color'),
+                  hintText: ptTr('008577'),
                   errorText: error,
                 ),
                 onSubmitted: (_) {
@@ -529,9 +529,9 @@ class _SystemColorsPanelState extends State<SystemColorsPanel> {
           controller: controller,
           autofocus: true,
           maxLength: 32,
-          decoration: const InputDecoration(
-            labelText: 'Palette name',
-            hintText: 'My favorite',
+          decoration: InputDecoration(
+            labelText: ptTr('Palette name'),
+            hintText: ptTr('My favorite'),
           ),
           onSubmitted: (String value) {
             if (value.trim().isNotEmpty)
@@ -608,14 +608,14 @@ class _SystemColorsPanelState extends State<SystemColorsPanel> {
             children: <Widget>[
               const Expanded(child: SectionLabel('Palette preview')),
               IconButton(
-                tooltip: 'Preview light colors',
+                tooltip: ptTr('Preview light colors'),
                 onPressed: () => setState(() => _previewDark = false),
                 isSelected: !dark,
                 icon: const Icon(Icons.light_mode_outlined, size: 19),
                 selectedIcon: const Icon(Icons.light_mode_rounded, size: 19),
               ),
               IconButton(
-                tooltip: 'Preview dark colors',
+                tooltip: ptTr('Preview dark colors'),
                 onPressed: () => setState(() => _previewDark = true),
                 isSelected: dark,
                 icon: const Icon(Icons.dark_mode_outlined, size: 19),
@@ -813,7 +813,7 @@ class _SystemColorsPanelState extends State<SystemColorsPanel> {
                             ),
                             label: Text(item.name),
                             tooltip:
-                                '${_paletteHex(item.seed)} · ${_paletteStyleNames[item.style]}',
+                                '${_paletteHex(item.seed)} · ${ptTr(_paletteStyleNames[item.style])}',
                             onPressed: () =>
                                 _choosePalette(item.seed, item.style),
                             onDeleted: () async {
@@ -1016,7 +1016,7 @@ class _SystemColorsPanelState extends State<SystemColorsPanel> {
                       ),
                     ),
                     IconButton(
-                      tooltip: 'Refresh Android palette',
+                      tooltip: ptTr('Refresh Android palette'),
                       onPressed: _busy
                           ? null
                           : () {

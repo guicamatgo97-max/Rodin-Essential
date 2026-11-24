@@ -515,8 +515,8 @@ class _MonitorAppPickerState extends State<_MonitorAppPicker> {
           const SizedBox(height: 12),
           TextField(
             onChanged: (v) => setState(() => query = v.toLowerCase().trim()),
-            decoration: const InputDecoration(
-              hintText: 'Search installed apps',
+            decoration: InputDecoration(
+              hintText: ptTr('Search installed apps'),
               prefixIcon: Icon(Icons.search_rounded),
             ),
           ),
@@ -866,7 +866,7 @@ class _MonitorHistoryState extends State<_MonitorHistory> {
                 Row(
                   children: [
                     IconButton(
-                      tooltip: 'All apps',
+                      tooltip: ptTr('All apps'),
                       icon: const Icon(Icons.arrow_back_rounded),
                       onPressed: () => setState(() => package = null),
                     ),
@@ -885,8 +885,8 @@ class _MonitorHistoryState extends State<_MonitorHistory> {
                   key: ValueKey(selected!.path),
                   initialValue: selected,
                   isExpanded: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Recorded session',
+                  decoration: InputDecoration(
+                    labelText: ptTr('Recorded session'),
                   ),
                   items: [
                     for (final e in group)

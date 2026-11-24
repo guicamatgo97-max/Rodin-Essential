@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
+import 'ptbr.dart';
 import 'package:flutter/rendering.dart';
 import 'page_motion.dart';
 
@@ -224,9 +225,9 @@ class _HubHeadlineState extends State<HubHeadline>
       TextSpan(
         style: style,
         children: [
-          TextSpan(text: '${copy.lead}\n'),
+          TextSpan(text: '${ptTr(copy.lead)}\n'),
           TextSpan(
-            text: copy.emphasis,
+            text: ptTr(copy.emphasis),
             style: TextStyle(color: accent),
           ),
         ],
@@ -268,7 +269,7 @@ class _HubHeadlineState extends State<HubHeadline>
               textScaler: scaler,
             )..layout(maxWidth: constraints.maxWidth);
             final body = TextPainter(
-              text: TextSpan(text: copy.description, style: description),
+              text: TextSpan(text: ptTr(copy.description), style: description),
               textDirection: direction,
               textScaler: scaler,
             )..layout(maxWidth: constraints.maxWidth);
@@ -296,7 +297,8 @@ class _HubHeadlineState extends State<HubHeadline>
           width: double.infinity,
           child: RepaintBoundary(
             child: Semantics(
-              label: '${copy.lead} ${copy.emphasis} ${copy.description}',
+              label:
+                  '${ptTr(copy.lead)} ${ptTr(copy.emphasis)} ${ptTr(copy.description)}',
               child: ExcludeSemantics(
                 child: AnimatedBuilder(
                   animation: _motion,

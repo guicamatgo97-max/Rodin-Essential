@@ -487,8 +487,8 @@ class _PerAppControlsScreenState extends State<PerAppControlsScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
           child: TextField(
             controller: _search,
-            decoration: const InputDecoration(
-              hintText: 'Search installed apps',
+            decoration: InputDecoration(
+              hintText: ptTr('Search installed apps'),
               prefixIcon: Icon(Icons.search_rounded),
               border: InputBorder.none,
             ),

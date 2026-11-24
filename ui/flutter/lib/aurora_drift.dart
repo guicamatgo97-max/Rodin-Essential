@@ -129,7 +129,7 @@ class _AuroraDriftState extends State<AuroraDrift>
           Row(
             children: <Widget>[
               IconButton(
-                tooltip: 'Back to secret room',
+                tooltip: ptTr('Back to secret room'),
                 onPressed: widget.onBack,
                 icon: const Icon(Icons.arrow_back_rounded),
               ),
@@ -145,7 +145,7 @@ class _AuroraDriftState extends State<AuroraDrift>
               ),
               if (_game.running)
                 IconButton(
-                  tooltip: 'Pause game',
+                  tooltip: ptTr('Pause game'),
                   onPressed: _pause,
                   icon: const Icon(Icons.pause_rounded),
                 ),
