@@ -13,9 +13,11 @@ class _Pat {
   final String out;
 }
 
+bool ptBrAtivo = true;
+
 /// Traduz [s] para PT-BR quando existir entrada no dicionario; senao devolve [s].
 String ptTr(String s) {
-  if (s.isEmpty || !_hasLetter.hasMatch(s)) return s;
+  if (!ptBrAtivo || s.isEmpty || !_hasLetter.hasMatch(s)) return s;
   final String? c = _cache[s];
   if (c != null) return c;
   final String r = _translate(s);
@@ -48,7 +50,11 @@ String _translate(String s) {
   }
   final List<_Pat> pats = _compiled ??= <_Pat>[
     for (final List<Object> p in _patterns)
-      _Pat(RegExp(p[0] as String, dotAll: true), p[1] as List<int>, p[2] as String),
+      _Pat(
+        RegExp(p[0] as String, dotAll: true, caseSensitive: false),
+        p[1] as List<int>,
+        p[2] as String,
+      ),
   ];
   for (final _Pat p in pats) {
     final RegExpMatch? m = p.re.firstMatch(t);
@@ -57,9 +63,35 @@ String _translate(String s) {
     for (int i = 0; i < p.labels.length; i++) {
       out = out.replaceAll('{${p.labels[i]}}', ptTr(m.group(i + 1)!));
     }
+    if (t == t.toUpperCase() && t != t.toLowerCase()) return out.toUpperCase();
+    final String f = t.substring(0, 1);
+    if (f != f.toUpperCase() && out.isNotEmpty) {
+      return out.substring(0, 1).toLowerCase() + out.substring(1);
+    }
     return out;
   }
   return s;
+}
+
+w.InlineSpan _trSpan(w.InlineSpan span) {
+  if (!ptBrAtivo) return span;
+  if (span is w.TextSpan) {
+    final String? raw = span.text;
+    final List<w.InlineSpan>? kids = span.children;
+    return w.TextSpan(
+      text: raw != null ? ptTr(raw) : null,
+      children: kids?.map(_trSpan).toList(growable: false),
+      style: span.style,
+      recognizer: span.recognizer,
+      mouseCursor: span.mouseCursor,
+      onEnter: span.onEnter,
+      onExit: span.onExit,
+      semanticsLabel: span.semanticsLabel != null ? ptTr(span.semanticsLabel!) : null,
+      locale: span.locale,
+      spellOut: span.spellOut,
+    );
+  }
+  return span;
 }
 
 /// Substitui o Text do Flutter: traduz o texto antes de desenhar.
@@ -120,7 +152,7 @@ class Text extends w.StatelessWidget {
   w.Widget build(w.BuildContext context) {
     if (textSpan != null) {
       return w.Text.rich(
-        textSpan!,
+        _trSpan(textSpan!),
         style: style,
         strutStyle: strutStyle,
         textAlign: textAlign,
@@ -130,7 +162,7 @@ class Text extends w.StatelessWidget {
         overflow: overflow,
         textScaler: textScaler,
         maxLines: maxLines,
-        semanticsLabel: semanticsLabel,
+        semanticsLabel: semanticsLabel != null ? ptTr(semanticsLabel!) : null,
         textWidthBasis: textWidthBasis,
         textHeightBehavior: textHeightBehavior,
         selectionColor: selectionColor,
@@ -147,9 +179,62 @@ class Text extends w.StatelessWidget {
       overflow: overflow,
       textScaler: textScaler,
       maxLines: maxLines,
-      semanticsLabel: semanticsLabel,
+      semanticsLabel: semanticsLabel != null ? ptTr(semanticsLabel!) : null,
       textWidthBasis: textWidthBasis,
       textHeightBehavior: textHeightBehavior,
+      selectionColor: selectionColor,
+    );
+  }
+}
+
+/// Substitui o RichText do Flutter: traduz os TextSpans antes de desenhar.
+class RichText extends w.StatelessWidget {
+  const RichText({
+    super.key,
+    required this.text,
+    this.textAlign = w.TextAlign.start,
+    this.textDirection,
+    this.softWrap = true,
+    this.overflow = w.TextOverflow.clip,
+    this.textScaler = w.TextScaler.noScaling,
+    this.maxLines,
+    this.locale,
+    this.strutStyle,
+    this.textWidthBasis = w.TextWidthBasis.parent,
+    this.textHeightBehavior,
+    this.selectionRegistrar,
+    this.selectionColor,
+  });
+
+  final w.InlineSpan text;
+  final w.TextAlign textAlign;
+  final w.TextDirection? textDirection;
+  final bool softWrap;
+  final w.TextOverflow overflow;
+  final w.TextScaler textScaler;
+  final int? maxLines;
+  final w.Locale? locale;
+  final w.StrutStyle? strutStyle;
+  final w.TextWidthBasis textWidthBasis;
+  final w.TextHeightBehavior? textHeightBehavior;
+  final w.SelectionRegistrar? selectionRegistrar;
+  final w.Color? selectionColor;
+
+  @override
+  w.Widget build(w.BuildContext context) {
+    return w.RichText(
+      text: _trSpan(text),
+      textAlign: textAlign,
+      textDirection: textDirection,
+      softWrap: softWrap,
+      overflow: overflow,
+      textScaler: textScaler,
+      maxLines: maxLines,
+      locale: locale,
+      strutStyle: strutStyle,
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior,
+      selectionRegistrar: selectionRegistrar,
       selectionColor: selectionColor,
     );
   }
@@ -510,7 +595,7 @@ const Map<String, String> _exact = <String, String>{
   'Project source, help and device community': 'Código do projeto, ajuda e comunidade do dispositivo',
   'Kernel & Hardware Disclaimer': 'Aviso sobre kernel e hardware',
   'Direct native hardware parameter tuning': 'Ajuste direto e nativo dos parâmetros de hardware',
-  'Rodin Essential provides direct kernel hardware tuning, MediaTek Mali GPU frequency locks, independent CPU frequency and topology control, and AIDL display calibrations via native ROM system interfaces. GPU modes never change CPU settings. Gaming Dynamic and Extreme Beast intentionally override only the vendor GPU cooling cap; sustained high clocks can cause severe heat, battery drain, instability, or hardware damage.': 'O Rodin Essential oferece ajuste direto de hardware no kernel, travas de frequência da GPU MediaTek Mali, controle independente de frequência e topologia da CPU e calibrações de tela via AIDL por meio das interfaces nativas do sistema da ROM. Os modos de GPU nunca alteram as configurações da CPU. Game dinâmico e Modo extremo substituem intencionalmente apenas o limite de resfriamento da GPU definido pelo fabricante; clocks altos e sustentados podem causar superaquecimento severo, consumo excessivo de bateria, instabilidade ou danos ao hardware.',
+  'Rodin Essential provides direct kernel hardware tuning, MediaTek Mali GPU frequency locks, independent CPU frequency and topology control, and AIDL display calibrations via native ROM system interfaces. GPU modes never change CPU settings. Gaming Dynamic and Extreme Beast intentionally override only the vendor GPU cooling cap; sustained high clocks can cause severe heat, battery drain, instability, or hardware damage.': 'O Rodin Essential oferece ajuste direto de hardware no kernel, travas de frequência da GPU MediaTek Mali, controle independente de frequência e topologia da CPU e calibrações de tela via AIDL por meio das interfaces nativas do sistema da ROM. Os modos de GPU nunca alteram as configurações da CPU. Modo jogo dinâmico e Modo extremo substituem intencionalmente apenas o limite de resfriamento da GPU definido pelo fabricante; clocks altos e sustentados podem causar superaquecimento severo, consumo excessivo de bateria, instabilidade ou danos ao hardware.',
   'Live graphics clock': 'Clock gráfico ao vivo',
   'Manual control': 'Controle manual',
   'Auto balance': 'Equilíbrio automático',
@@ -522,7 +607,7 @@ const Map<String, String> _exact = <String, String>{
   'Tune your device': 'Ajuste seu dispositivo',
   'Every performance and hardware control in one place': 'Todos os controles de desempenho e hardware em um só lugar',
   'Stock Balanced': 'Padrão equilibrado',
-  'Gaming Dynamic': 'Game dinâmico',
+  'Gaming Dynamic': 'Modo jogo dinâmico',
   'Battery Saver': 'Economia de bateria',
   'Extreme Beast': 'Modo extremo',
   'Super Touch': 'Super toque',
@@ -926,7 +1011,7 @@ const Map<String, String> _exact = <String, String>{
   '1300 MHz fixed · No downclock': '1300 MHz fixo · Sem redução de clock',
   'Extreme Beast · Fixed 1.30 GHz': 'Fera extrema · Fixo em 1.30 GHz',
   '260–1300 MHz · Full-range scaling': '260–1300 MHz · Escalonamento completo',
-  'Gaming Dynamic · Full Range': 'Game dinâmico · Faixa completa',
+  'Gaming Dynamic · Full Range': 'Modo jogo dinâmico · Faixa completa',
   'OEM range · Vendor managed': 'Faixa do fabricante · Gerenciada pelo fabricante',
   'Stock Balanced · OEM Control': 'Equilibrado original · Controle do fabricante',
   '260–598 MHz · Efficiency cap': '260–598 MHz · Limite de eficiência',
