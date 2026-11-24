@@ -645,6 +645,7 @@ const Map<String, String> _exact = <String, String>{
   'Balanced Fast': 'Rápido equilibrado',
   'Fast Daily': 'Diário rápido',
   'Near Maximum': 'Quase máximo',
+  'HyperCharge': 'Velocidade máxima',
   'Charge Output': 'Saída de carga',
   'ROM-managed charging, taper and battery care': 'Carregamento, redução gradual e cuidado da bateria gerenciados pela ROM',
   'Lower-heat everyday charging': 'Carregamento diário com menos calor',
