@@ -187,59 +187,6 @@ class Text extends w.StatelessWidget {
   }
 }
 
-/// Substitui o RichText do Flutter: traduz os TextSpans antes de desenhar.
-class RichText extends w.StatelessWidget {
-  const RichText({
-    super.key,
-    required this.text,
-    this.textAlign = w.TextAlign.start,
-    this.textDirection,
-    this.softWrap = true,
-    this.overflow = w.TextOverflow.clip,
-    this.textScaler = w.TextScaler.noScaling,
-    this.maxLines,
-    this.locale,
-    this.strutStyle,
-    this.textWidthBasis = w.TextWidthBasis.parent,
-    this.textHeightBehavior,
-    this.selectionRegistrar,
-    this.selectionColor,
-  });
-
-  final w.InlineSpan text;
-  final w.TextAlign textAlign;
-  final w.TextDirection? textDirection;
-  final bool softWrap;
-  final w.TextOverflow overflow;
-  final w.TextScaler textScaler;
-  final int? maxLines;
-  final w.Locale? locale;
-  final w.StrutStyle? strutStyle;
-  final w.TextWidthBasis textWidthBasis;
-  final w.TextHeightBehavior? textHeightBehavior;
-  final w.SelectionRegistrar? selectionRegistrar;
-  final w.Color? selectionColor;
-
-  @override
-  w.Widget build(w.BuildContext context) {
-    return w.RichText(
-      text: _trSpan(text),
-      textAlign: textAlign,
-      textDirection: textDirection,
-      softWrap: softWrap,
-      overflow: overflow,
-      textScaler: textScaler,
-      maxLines: maxLines,
-      locale: locale,
-      strutStyle: strutStyle,
-      textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior,
-      selectionRegistrar: selectionRegistrar,
-      selectionColor: selectionColor,
-    );
-  }
-}
-
 const Map<String, String> _exact = <String, String>{
   'PENDING': 'PENDENTE',
   'TIMEOUT': 'TEMPO ESGOTADO',
